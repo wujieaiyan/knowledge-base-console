@@ -1,0 +1,61 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: kb-console
+  datasource:
+    url: jdbc:h2:file:./data/kbdb;AUTO_SERVER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 120MB
+  jackson:
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+
+kb:
+  storage-dir: ./data/uploads
+  token-secret: kb-console-demo-secret-change-me-2026-11-07
+  token-ttl-seconds: 86400
+  max-file-size: 104857600
+  max-batch-size: 50
+  max-directory-depth: 5
+  llm:
+    enabled: ${KB_LLM_ENABLED:true}
+    base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+    model: ${OLLAMA_MODEL:qwen2.5:3b-instruct}
+    num-ctx: ${OLLAMA_NUM_CTX:8192}
+    temperature: ${OLLAMA_TEMPERATURE:0.1}
+    timeout-seconds: ${OLLAMA_TIMEOUT_SECONDS:120}
+    max-context-chunks: 5
+    max-context-chars: 6000
+    verify-on-startup: true
+    think: ${OLLAMA_THINK:false}
+  elasticsearch:
+    enabled: ${KB_ES_ENABLED:true}
+    base-url: ${ELASTICSEARCH_URL:http://localhost:9200}
+    index: ${ELASTICSEARCH_INDEX:kb_chunk}
+    dimensions: 256
+    request-timeout-seconds: 10
+    refresh: true
+    verify-on-startup: true
+    reindex-on-startup: true
+    bulk-size: 200
+
+logging:
+  level:
+    com.kbconsole: INFO
+    org.hibernate.SQL: WARN

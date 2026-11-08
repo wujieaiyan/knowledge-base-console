@@ -1,0 +1,9 @@
+.idea/
+backend/target/
+backend/data/
+backend/*.log
+backend/*.out
+frontend/dist/
+frontend/node_modules/
+deploy-runtime/
+*.pid
